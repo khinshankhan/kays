@@ -1,0 +1,11 @@
+* Contributing to caputo
+
+  First thing's first: Thanks for taking the time to contribute! :tada:
+
+* Notice
+
+  This file is a WIP! Feel free to make a pull request and a maintainer will reply shortly. The only thing to note is
+  that all pull requests should be made from a branch and not directly from a fork's master to our master branch (this
+  makes rebasing easier for maintainers).
+
+  Thanks for understanding and contributing!

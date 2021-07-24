@@ -1,0 +1,79 @@
+#+TITLE: caputo
+
+Managed documents.
+
+* Table of Contents :toc:
+- [[#the-problem][The Problem]]
+- [[#the-product][The Product]]
+- [[#a-common-user][A Common User]]
+- [[#usage][Usage]]
+- [[#warning][Warning]]
+- [[#contributing][Contributing]]
+- [[#code-of-conduct][Code of Conduct]]
+- [[#license][License]]
+
+* The Problem
+  I have literally millions if not somewhere in billions documents (images, PDFs, DOCXs, text and org files, etc) saved
+  in various locations (phone, sd cards, usbs, laptops, desktops, dropbox, google drive, etc).  I vaguely recall the
+  important or most used ones, but the others are ???  and I'd like to change that. I want to be able to search up
+  something by either what I remember about the document or 'facts' about the document.
+
+* The Product
+  Managed documents best describes what I want simply.
+
+  Expanding on the facts mentioned in [[#mini-prelude][The Problem]], these facts include what the document represents (eg image of scenery
+  vs food), how closely related the document is to another document (perhaps I have a duplicate? or maybe I took similar
+  images and would like to view them together?), when the document was created vs modified vs uploaded, words in the
+  documents (text files may be easy but images should be OCR'd), etc.
+
+  I should also be able to tag and add descriptions to the documents. The search functionality should be powerful but
+  intuitive enough that a nontechnical person can easily use it.
+
+  It should also be possible to download the image or make it public. Once made public, it should be possible to add an
+  alias to the link as well as filename and selectively decide which stats to show with sane defaults.
+
+  This project is also meant to utilize the filesystem and the code should be run locally (besides perhaps a website or
+  app frontend). Perhaps in the future it might be integrated with cloud services, but my goal is just personal use and
+  learning moreso than putting building blocks together.
+
+* A Common User
+  I imagine most people likely have a vast number of documents. A common example may be saving memes. When you save a
+  meme to your phone, it's probably a good meme (maybe not). But the point is, if you re-encounter the meme, you might
+  think it's neat once again and save it, and now you've ended up with duplicates.
+
+  Most modern apps and phones are smart enough to detect this, but usually to the extent of nearly exact. Some phones
+  are capable of grouping images as well, but it's not quite the grouping /I'd/ like :stuck_out_tongue:
+
+  Or maybe, it's been a few months and you vaguely recall text in it, but can't seem to find it for when it's relevant
+  in the moment :frowning: Sure would be helpful to be able to search :eyes:
+
+  Pretty relatable user, but it's important to note this project is meant to be generalized to all documents.
+
+* Usage
+  WIP :shipit:
+
+* Warning
+  None of this code should be used as a dependency. This project should be used as is or with a fork because code will
+  likely be ripped out into separate and sensible packages as the project grows. Also, things will likely get
+  renamed... a lot.
+
+  This project is also a learning experience since graphs, sets, ocr, ml, image processing, and other buzzwords aren't
+  my expertise... yet :smirk:.
+
+  This whole thing is a WIP :shipit:
+
+* Contributing
+  There are many ways in which you can participate in the project, for example:
+
+  - See an open pull request? You can try reviewing it!
+  - Find a pesky bug or perhaps a neat place to refactor? Report it in an issue or fix it with a PR!
+  - Notice some weird or missing documentation? Fix or add it with a PR! (Lazy? Just report it in an issue :smile:)
+  - Want to give a recommendation for a feature? Go ahead and open an issue.
+
+  Feel free to open a pull request, check the [[file:CONTRIBUTING.org][contributing guide]] for more details.
+
+* Code of Conduct
+  WIP :shipit:
+
+* License
+  This project uses an MIT license, which can be viewed [[file:../LICENSE][here]].
