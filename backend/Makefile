@@ -28,4 +28,5 @@ GOSERVICES = $(subst /,, $(subst ./,, $(RAWGOSERVICES)))
 
 # creates a TARGET per go service
 $(GOSERVICES): % : %/main.go
-	go build -ldflags="-s -w -X main.CommitHash=$(GIT_COMMIT) -X main.BuildDate=$(BUILD_DATE) " -o bin/$@ $@/*.go
+	@cd $@
+	go build -ldflags="-s -w -X main.CommitHash=$(GIT_COMMIT) -X main.BuildDate=$(BUILD_DATE)" -o ../bin/$@ *.go
