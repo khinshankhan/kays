@@ -1,14 +1,13 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
 	"log"
-	"net/http"
 	"os"
-	"time"
+	"os/signal"
+	"strconv"
+	"syscall"
 
-	"github.com/gorilla/mux"
+	"github.com/kkhan01/caputo/backend/server/routes"
 )
 
 // Version and BuildData get replaced during build with the commit hash and time
@@ -18,44 +17,43 @@ var (
 	BuildDate  = ""
 )
 
-// Meta holds project metadata
-type Meta struct {
-	CommitHash string    `json:"commitHash"`
-	BuildDate  string    `json:"buildDate"`
-	SystemTime time.Time `json:"systemTime"`
+func main() {
+	port := loadConfiguration()
+
+	start(port)
+	// Wait for termination signal
+	signalChannel := make(chan os.Signal, 1)
+	done := make(chan bool, 1)
+	signal.Notify(signalChannel, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-signalChannel
+		log.Println("Received termination signal, attempting to gracefully shut down")
+		stop()
+		// TODO: add in graceful services shutdown
+		done <- true
+	}()
+	<-done
+	log.Println("Shutting down")
 }
 
-func main() {
-	router := mux.NewRouter()
+func start(port int) {
+	go routes.Handle(CommitHash, BuildDate, port)
+}
 
-	router.HandleFunc("/", meta)
+func stop() {
+	routes.Shutdown()
+}
+
+// TODO: build this out to read in a full configuration
+func loadConfiguration() int {
+	var err error
 
 	port := 5000
 	if p := os.Getenv("PORT"); p != "" {
-		_, err := fmt.Sscanf(p, "%d", &port)
-		if err != nil {
+		if port, err = strconv.Atoi(p); err != nil {
 			log.Fatal("Invalid PORT in env")
 		}
 	}
 
-	fmt.Printf("Listening on port %d\n", port)
-	log.Fatal(
-		http.ListenAndServe(fmt.Sprintf(":%d", port), router),
-	)
-}
-
-func meta(w http.ResponseWriter, r *http.Request) {
-	currentTimestamp := time.Now().UTC()
-
-	metainfo := Meta{
-		BuildDate:  BuildDate,
-		CommitHash: CommitHash,
-		SystemTime: currentTimestamp,
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-
-	if err := json.NewEncoder(w).Encode(metainfo); err != nil {
-		log.Println(err.Error())
-	}
+	return port
 }
