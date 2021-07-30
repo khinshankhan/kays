@@ -47,6 +47,7 @@ func CreateRouter() *mux.Router {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/meta", MetaHandler)
+	router.HandleFunc("/upload", UploadHandler)
 
 	return router
 }

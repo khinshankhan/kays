@@ -2,3 +2,5 @@ github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
 github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
 github.com/kkhan01/caputo/backend/goutils v0.0.0-20210725182810-bf7264927540 h1:9ivyCNKZz+048J7XVQX+b2UN2QkDlpLT2ZS6XT9hDEs=
 github.com/kkhan01/caputo/backend/goutils v0.0.0-20210725182810-bf7264927540/go.mod h1:xUb39HC28UY2SxKtGl2vSBFz12XN5Who9BkMFYzVRKg=
+github.com/kkhan01/caputo/backend/goutils v0.0.0-20210730230107-f2f1bbfc3afd h1:HNCYhmW+/xUwwAuAdvD2INV0BM3bq2spat4zlMAXhR4=
+github.com/kkhan01/caputo/backend/goutils v0.0.0-20210730230107-f2f1bbfc3afd/go.mod h1:xUb39HC28UY2SxKtGl2vSBFz12XN5Who9BkMFYzVRKg=
