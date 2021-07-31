@@ -1,12 +1,13 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"os"
 	"os/signal"
-	"strconv"
 	"syscall"
 
+	"github.com/kkhan01/caputo/backend/server/config"
 	"github.com/kkhan01/caputo/backend/server/routes"
 )
 
@@ -17,10 +18,19 @@ var (
 	BuildDate  = ""
 )
 
-func main() {
-	port := loadConfiguration()
+var (
+	envFile = flag.String("env", "", "Path to env file in either yaml or json format")
+)
 
-	start(port)
+func main() {
+	flag.Parse()
+
+	cfg, err := loadConfiguration()
+	if err != nil {
+		panic(err)
+	}
+
+	start(cfg)
 	// Wait for termination signal
 	signalChannel := make(chan os.Signal, 1)
 	done := make(chan bool, 1)
@@ -36,8 +46,8 @@ func main() {
 	log.Println("Shutting down")
 }
 
-func start(port int) {
-	go routes.Handle(CommitHash, BuildDate, port)
+func start(cfg *config.Config) {
+	go routes.Handle(CommitHash, BuildDate, cfg.Web)
 }
 
 func stop() {
@@ -45,15 +55,6 @@ func stop() {
 }
 
 // TODO: build this out to read in a full configuration
-func loadConfiguration() int {
-	var err error
-
-	port := 5000
-	if p := os.Getenv("PORT"); p != "" {
-		if port, err = strconv.Atoi(p); err != nil {
-			log.Fatal("Invalid PORT in env")
-		}
-	}
-
-	return port
+func loadConfiguration() (*config.Config, error) {
+	return config.Load(*envFile)
 }

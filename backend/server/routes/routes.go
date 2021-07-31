@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/kkhan01/caputo/backend/server/config"
 )
 
 var (
@@ -16,21 +17,22 @@ var (
 )
 
 // Handle creates the router and starts the server
-func Handle(commitHash, buildDate string, port int) {
+func Handle(commitHash, buildDate string, webConfig *config.WebConfig) {
 	CommitHash = commitHash
 	BuildDate = buildDate
 
 	router := CreateRouter()
 
+	address := webConfig.SocketAddress()
 	server = &http.Server{
-		Addr:         fmt.Sprintf(":%d", port),
+		Addr:         address,
 		Handler:      router,
 		ReadTimeout:  15 * time.Second,
 		WriteTimeout: 15 * time.Second,
 		IdleTimeout:  15 * time.Second,
 	}
 
-	fmt.Printf("Listening on port %d\n", port)
+	fmt.Printf("Listening on %s\n", address)
 	server.ListenAndServe()
 }
 
