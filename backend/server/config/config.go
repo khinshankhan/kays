@@ -16,11 +16,11 @@ type Config struct {
 	// Web is the configuration for the web listener
 	Web *WebConfig `yaml:"web" json:"web"`
 
-	filePath string // path to the file from which config was loaded from
+	Meta *MetaConfig
 }
 
 // Load loads a custom configuration file
-func Load(configFile string) (*Config, error) {
+func Load(commitHash, buildDate, configFile string) (*Config, error) {
 	log.Printf("Reading configuration from configFile=%s\n", configFile)
 
 	cfg, err := readConfigurationFile(configFile)
@@ -32,7 +32,13 @@ func Load(configFile string) (*Config, error) {
 		return nil, err
 	}
 
-	cfg.filePath = configFile
+	metaInfo := &MetaConfig{
+		CommitHash: commitHash,
+		BuildDate:  buildDate,
+		filePath:   configFile,
+	}
+	cfg.Meta = metaInfo
+
 	return cfg, nil
 }
 

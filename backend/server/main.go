@@ -8,7 +8,7 @@ import (
 	"syscall"
 
 	"github.com/kkhan01/caputo/backend/server/config"
-	"github.com/kkhan01/caputo/backend/server/routes"
+	"github.com/kkhan01/caputo/backend/server/controllers"
 )
 
 // Version and BuildData get replaced during build with the commit hash and time
@@ -47,14 +47,14 @@ func main() {
 }
 
 func start(cfg *config.Config) {
-	go routes.Handle(CommitHash, BuildDate, cfg.Web)
+	go controllers.Handle(cfg.Meta, cfg.Web)
 }
 
 func stop() {
-	routes.Shutdown()
+	controllers.Shutdown()
 }
 
 // TODO: build this out to read in a full configuration
 func loadConfiguration() (*config.Config, error) {
-	return config.Load(*envFile)
+	return config.Load(CommitHash, BuildDate, *envFile)
 }

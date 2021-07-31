@@ -1,4 +1,4 @@
-package routes
+package controllers
 
 import (
 	"context"
@@ -11,17 +11,12 @@ import (
 )
 
 var (
-	CommitHash = ""
-	BuildDate  = ""
-	server     *http.Server
+	server *http.Server
 )
 
 // Handle creates the router and starts the server
-func Handle(commitHash, buildDate string, webConfig *config.WebConfig) {
-	CommitHash = commitHash
-	BuildDate = buildDate
-
-	router := CreateRouter()
+func Handle(metaConfig *config.MetaConfig, webConfig *config.WebConfig) {
+	router := CreateRouter(metaConfig)
 
 	address := webConfig.SocketAddress()
 	server = &http.Server{
@@ -45,10 +40,10 @@ func Shutdown() {
 }
 
 // CreateRouter creates the router for the http server
-func CreateRouter() *mux.Router {
+func CreateRouter(metaConfig *config.MetaConfig) *mux.Router {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/meta", MetaHandler)
+	router.HandleFunc("/meta", MetaHandler(metaConfig))
 	router.HandleFunc("/upload", UploadHandler)
 
 	return router
