@@ -1,4 +1,4 @@
-module github.com/kkhan01/caputo/backend/server
+module github.com/kkhan01/caputo/backend
 
 go 1.16
 

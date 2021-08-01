@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/kkhan01/caputo/backend/server/config"
+	"github.com/kkhan01/caputo/backend/config"
 
 	_ "github.com/lib/pq"
 )

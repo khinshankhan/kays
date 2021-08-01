@@ -5,8 +5,8 @@ import (
 	"mime/multipart"
 
 	"github.com/google/uuid"
-	"github.com/kkhan01/caputo/backend/server/data/files"
-	"github.com/kkhan01/caputo/backend/server/data/fs"
+	"github.com/kkhan01/caputo/backend/data/files"
+	"github.com/kkhan01/caputo/backend/data/fs"
 )
 
 type (

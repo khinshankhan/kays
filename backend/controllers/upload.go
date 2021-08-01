@@ -6,10 +6,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/kkhan01/caputo/backend/server/data/files"
-	uploaddomain "github.com/kkhan01/caputo/backend/server/domain/upload"
-	uploadusecases "github.com/kkhan01/caputo/backend/server/usecases/upload"
-	"github.com/kkhan01/caputo/backend/server/utils"
+	"github.com/kkhan01/caputo/backend/data/files"
+	uploaddomain "github.com/kkhan01/caputo/backend/domain/upload"
+	uploadusecases "github.com/kkhan01/caputo/backend/usecases/upload"
+	"github.com/kkhan01/caputo/backend/utils"
 )
 
 var (

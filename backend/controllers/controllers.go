@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/kkhan01/caputo/backend/server/config"
-	"github.com/kkhan01/caputo/backend/server/data/files"
-	"github.com/kkhan01/caputo/backend/server/infrastructure/rds"
+	"github.com/kkhan01/caputo/backend/config"
+	"github.com/kkhan01/caputo/backend/data/files"
+	"github.com/kkhan01/caputo/backend/infrastructure/rds"
 )
 
 var (

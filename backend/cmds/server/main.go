@@ -7,8 +7,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/kkhan01/caputo/backend/server/config"
-	"github.com/kkhan01/caputo/backend/server/controllers"
+	"github.com/kkhan01/caputo/backend/config"
+	"github.com/kkhan01/caputo/backend/controllers"
 )
 
 // Version and BuildData get replaced during build with the commit hash and time

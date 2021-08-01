@@ -3,8 +3,8 @@ package usecases
 import (
 	"time"
 
-	"github.com/kkhan01/caputo/backend/server/config"
-	metadomain "github.com/kkhan01/caputo/backend/server/domain/meta"
+	"github.com/kkhan01/caputo/backend/config"
+	metadomain "github.com/kkhan01/caputo/backend/domain/meta"
 )
 
 type (

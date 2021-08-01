@@ -20,13 +20,10 @@ BUILD_DATE = $(shell date +”%Y.%m.%d.%H%M%S”)
 .PHONY: build
 build: $(GOSERVICES)
 
-# go services as ./service/
-RAWGOSERVICES = $(dir $(wildcard ./*/main.go))
-# clean the service name ./service/ -> service
-GOSERVICES = $(subst /,, $(subst ./,, $(RAWGOSERVICES)))
+# go services from cmds directory as `service`
+GOSERVICES = $(notdir $(wildcard ./cmds/*))
 .PHONY: $(GOSERVICES)
 
 # creates a TARGET per go service
-$(GOSERVICES): % : %/main.go
-	@cd $@
-	go build -ldflags="-s -w -X main.CommitHash=$(GIT_COMMIT) -X main.BuildDate=$(BUILD_DATE)" -o ../bin/$@ *.go
+$(GOSERVICES): % : cmds/%/main.go
+	go build -ldflags="-s -w -X main.CommitHash=$(GIT_COMMIT) -X main.BuildDate=$(BUILD_DATE)" -o bin/$@ cmds/$@/*.go

@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/kkhan01/caputo/backend/server/config"
-	metausecases "github.com/kkhan01/caputo/backend/server/usecases/meta"
+	"github.com/kkhan01/caputo/backend/config"
+	metausecases "github.com/kkhan01/caputo/backend/usecases/meta"
 )
 
 func MetaHandler(metaConfig *config.MetaConfig) http.HandlerFunc {
