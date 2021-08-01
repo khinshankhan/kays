@@ -46,10 +46,10 @@ func CreateRouter(cfg *config.Config) *mux.Router {
 	router := mux.NewRouter()
 
 	conn := rds.GetConnection(cfg.DB)
-	repo := files.NewRepository(conn)
+	filesRepo := files.NewRepository(conn)
 
 	router.HandleFunc("/meta", MetaHandler(cfg.Meta))
-	router.HandleFunc("/upload", UploadHandler(repo))
+	router.HandleFunc("/upload", UploadHandler(filesRepo))
 
 	return router
 }

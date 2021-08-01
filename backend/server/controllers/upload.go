@@ -10,13 +10,14 @@ import (
 )
 
 var (
-	Size = utils.MebibyteToBytes(1)
+	// Allow uploads up to 10 mb
+	Size = utils.MebibyteToBytes(10)
 )
 
-func UploadHandler(repo files.Repository) http.HandlerFunc {
+func UploadHandler(filesRepo files.Repository) http.HandlerFunc {
+	uploadService := uploadusecases.NewUsecases(filesRepo)
+
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println(r.Method)
-		fmt.Println(r.MultipartForm)
 		if r.Method != "POST" {
 			return
 		}
@@ -42,7 +43,7 @@ func UploadHandler(repo files.Repository) http.HandlerFunc {
 			filename = handler.Filename
 		}
 
-		err = uploadusecases.Upload(repo, filename, file)
+		err = uploadService.Upload(filename, file)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
