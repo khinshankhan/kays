@@ -47,7 +47,7 @@ func main() {
 }
 
 func start(cfg *config.Config) {
-	go controllers.Handle(cfg.Meta, cfg.Web)
+	go controllers.Handle(cfg)
 }
 
 func stop() {

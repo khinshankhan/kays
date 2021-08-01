@@ -15,10 +15,10 @@ var (
 )
 
 // Handle creates the router and starts the server
-func Handle(metaConfig *config.MetaConfig, webConfig *config.WebConfig) {
-	router := CreateRouter(metaConfig)
+func Handle(cfg *config.Config) {
+	router := CreateRouter(cfg)
 
-	address := webConfig.SocketAddress()
+	address := cfg.Web.SocketAddress()
 	server = &http.Server{
 		Addr:         address,
 		Handler:      router,
@@ -40,11 +40,11 @@ func Shutdown() {
 }
 
 // CreateRouter creates the router for the http server
-func CreateRouter(metaConfig *config.MetaConfig) *mux.Router {
+func CreateRouter(cfg *config.Config) *mux.Router {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/meta", MetaHandler(metaConfig))
 	router.HandleFunc("/upload", UploadHandler)
+	router.HandleFunc("/meta", MetaHandler(cfg.Meta))
 
 	return router
 }
