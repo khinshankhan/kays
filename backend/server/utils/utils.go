@@ -1,4 +1,4 @@
-package goutils
+package utils
 
 import (
 	"encoding/json"
@@ -11,8 +11,4 @@ func PrettyFormat(e interface{}) []byte {
 	}
 
 	return output
-}
-
-func MebibyteToBytes(mb int64) int64 {
-	return mb << 20
 }

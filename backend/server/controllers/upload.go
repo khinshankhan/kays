@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/kkhan01/caputo/backend/goutils"
 	"github.com/kkhan01/caputo/backend/server/data/files"
 	uploadusecases "github.com/kkhan01/caputo/backend/server/usecases/upload"
+	"github.com/kkhan01/caputo/backend/server/utils"
 )
 
 var (
-	Size = goutils.MebibyteToBytes(1)
+	Size = utils.MebibyteToBytes(1)
 )
 
 func UploadHandler(repo files.Repository) http.HandlerFunc {
