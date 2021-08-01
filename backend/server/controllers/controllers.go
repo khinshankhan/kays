@@ -8,6 +8,8 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/kkhan01/caputo/backend/server/config"
+	"github.com/kkhan01/caputo/backend/server/data/files"
+	"github.com/kkhan01/caputo/backend/server/infrastructure/rds"
 )
 
 var (
@@ -43,8 +45,11 @@ func Shutdown() {
 func CreateRouter(cfg *config.Config) *mux.Router {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/upload", UploadHandler)
+	conn := rds.GetConnection(cfg.DB)
+	repo := files.NewRepository(conn)
+
 	router.HandleFunc("/meta", MetaHandler(cfg.Meta))
+	router.HandleFunc("/upload", UploadHandler(repo))
 
 	return router
 }
