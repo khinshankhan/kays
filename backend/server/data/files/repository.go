@@ -2,7 +2,6 @@ package files
 
 import (
 	"database/sql"
-	"fmt"
 )
 
 type (
@@ -17,7 +16,12 @@ func NewRepository(db *sql.DB) Repository {
 	}
 }
 
-func (repo Repository) WriteFileMeta(saveename, filename string) error {
-	fmt.Println("Write file meta.")
-	return nil
+func (repo Repository) WriteFileMeta(savename, filename string) error {
+	_, err := repo.db.Exec(
+		"INSERT INTO files (name, original) VALUES ($1, $2);",
+		savename,
+		filename,
+	)
+
+	return err
 }
