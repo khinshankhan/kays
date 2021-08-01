@@ -27,3 +27,16 @@ GOSERVICES = $(notdir $(wildcard ./cmds/*))
 # creates a TARGET per go service
 $(GOSERVICES): % : cmds/%/main.go
 	go build -ldflags="-s -w -X main.CommitHash=$(GIT_COMMIT) -X main.BuildDate=$(BUILD_DATE)" -o bin/$@ cmds/$@/*.go
+
+.PHONY: test
+test:
+	go test ./...
+
+.PHONY: lint
+lint:  # runs vet and fails if any files need to be formatted
+	go vet ./...
+	test -z "$$(go fmt ./...)"
+
+.PHONY: lint
+fmt:  # actually format files
+	go fmt ./...
