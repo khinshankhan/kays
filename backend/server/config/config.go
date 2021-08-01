@@ -16,6 +16,11 @@ type Config struct {
 	// Web is the configuration for the web listener
 	Web *WebConfig `yaml:"web" json:"web"`
 
+	// DB is the configuration for the db connection
+	DB *DBConfig `yaml:"db" json:"db"`
+
+	// Meta contains meta information about the config
+	// it isn't specified in the user config
 	Meta *MetaConfig
 }
 
@@ -68,6 +73,10 @@ func parseAndValidateConfig(bytes []byte, filename string) (*Config, error) {
 	}
 
 	if err := validateWebConfig(config); err != nil {
+		return nil, err
+	}
+
+	if err := validateDBConfig(config); err != nil {
 		return nil, err
 	}
 
