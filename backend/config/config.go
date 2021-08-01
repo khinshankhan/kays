@@ -1,12 +1,10 @@
 package config
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
-	"path/filepath"
 
 	"gopkg.in/yaml.v2"
 )
@@ -14,10 +12,10 @@ import (
 // Config is the main configuration structure
 type Config struct {
 	// Web is the configuration for the web listener
-	Web *WebConfig `yaml:"web" json:"web"`
+	Web *WebConfig `yaml:"web"`
 
 	// DB is the configuration for the db connection
-	DB *DBConfig `yaml:"db" json:"db"`
+	DB *DBConfig `yaml:"db"`
 
 	// Meta contains meta information about the config
 	// it isn't specified in the user config
@@ -61,16 +59,7 @@ func readConfigurationFile(filename string) (*Config, error) {
 
 func parseAndValidateConfig(bytes []byte, filename string) (*Config, error) {
 	config := &Config{}
-	switch filetype := filepath.Ext(filename); filetype {
-	case ".yml":
-		yaml.Unmarshal(bytes, config)
-	case "yaml":
-		yaml.Unmarshal(bytes, config)
-	case ".json":
-		json.Unmarshal(bytes, config)
-	default:
-		return nil, fmt.Errorf("invalid config file type: only yaml and json are supported")
-	}
+	yaml.Unmarshal(bytes, config)
 
 	if err := validateWebConfig(config); err != nil {
 		return nil, err

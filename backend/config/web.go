@@ -9,10 +9,10 @@ import (
 // which provides access to the web frontend
 type WebConfig struct {
 	// Address to listen on (defaults to 0.0.0.0 specified by DefaultWebAddress)
-	Address string `yaml:"address" json:"address"`
+	Address string `yaml:"address"`
 
 	// Port to listen on (default to 8080 specified by DefaultWebPort)
-	Port int `yaml:"port" json:"port"`
+	Port int `yaml:"port"`
 }
 
 func validateWebConfig(cfg *Config) error {

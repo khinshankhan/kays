@@ -7,11 +7,11 @@ import (
 
 // DBConfig is the structure which supports the configuration of the database
 type DBConfig struct {
-	Host     string `yaml:"host" json:"host"`
-	Port     int    `yaml:"port" json:"port"`
-	User     string `yaml:"user" json:"user"`
-	Password string `yaml:"password" json:"password"`
-	Name     string `yaml:"dbname" json:"dbname"`
+	Host     string `yaml:"host"`
+	Port     int    `yaml:"port"`
+	User     string `yaml:"user"`
+	Password string `yaml:"password"`
+	Name     string `yaml:"dbname"`
 }
 
 func validateDBConfig(cfg *Config) error {
