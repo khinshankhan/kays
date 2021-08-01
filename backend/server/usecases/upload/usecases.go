@@ -4,6 +4,7 @@ import (
 	"log"
 	"mime/multipart"
 
+	"github.com/google/uuid"
 	"github.com/kkhan01/caputo/backend/server/data/files"
 	"github.com/kkhan01/caputo/backend/server/data/fs"
 )
@@ -27,18 +28,21 @@ func NewUsecases(filesRepo files.Repository) usecases {
 	}
 }
 
-func (usecases usecases) Upload(filename string, file multipart.File) error {
-	err := fs.SaveFile(filename, file)
+func (usecases usecases) Upload(filename string, file multipart.File) (string, error) {
+	saveid := uuid.New()
+	savename := saveid.String()
+
+	err := fs.SaveFile(savename, file)
 	if err != nil {
 		log.Println("Error saving file:", err.Error())
-		return err
+		return savename, err
 	}
 
-	err = usecases.filesRepo.WriteFileMeta(filename, filename)
+	err = usecases.filesRepo.WriteFileMeta(saveid, filename)
 	if err != nil {
 		log.Println("Error writing file meta to db:", err.Error())
-		return err
+		return savename, err
 	}
 
-	return nil
+	return savename, nil
 }

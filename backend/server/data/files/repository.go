@@ -2,6 +2,8 @@ package files
 
 import (
 	"database/sql"
+
+	"github.com/google/uuid"
 )
 
 type (
@@ -16,10 +18,10 @@ func NewRepository(db *sql.DB) Repository {
 	}
 }
 
-func (repo Repository) WriteFileMeta(savename, filename string) error {
+func (repo Repository) WriteFileMeta(saveid uuid.UUID, filename string) error {
 	_, err := repo.db.Exec(
-		"INSERT INTO files (name, original) VALUES ($1, $2);",
-		savename,
+		"INSERT INTO files (saveid, filename) VALUES ($1, $2);",
+		saveid,
 		filename,
 	)
 

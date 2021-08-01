@@ -1,10 +1,13 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/kkhan01/caputo/backend/server/data/files"
+	uploaddomain "github.com/kkhan01/caputo/backend/server/domain/upload"
 	uploadusecases "github.com/kkhan01/caputo/backend/server/usecases/upload"
 	"github.com/kkhan01/caputo/backend/server/utils"
 )
@@ -43,11 +46,18 @@ func UploadHandler(filesRepo files.Repository) http.HandlerFunc {
 			filename = handler.Filename
 		}
 
-		err = uploadService.Upload(filename, file)
+		savename, err := uploadService.Upload(filename, file)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
-		fmt.Fprintf(w, "Successfully Uploaded File\n")
+		uploadInfo := uploaddomain.Uploaded{
+			Filename: savename,
+			Status:   http.StatusCreated,
+		}
+		w.Header().Set("Content-Type", "application/json")
+		if err := json.NewEncoder(w).Encode(uploadInfo); err != nil {
+			log.Println(err.Error())
+		}
 	}
 }
