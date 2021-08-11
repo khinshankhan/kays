@@ -49,7 +49,7 @@ func CreateRouter(cfg *config.Config) *mux.Router {
 	filesRepo := files.NewRepository(conn)
 
 	router.HandleFunc("/meta", MetaHandler(cfg.Meta))
-	router.HandleFunc("/upload", UploadHandler(filesRepo))
+	router.HandleFunc("/upload", UploadHandler(filesRepo, cfg.Storage.Path))
 
 	return router
 }
