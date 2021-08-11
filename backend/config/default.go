@@ -26,3 +26,8 @@ const (
 	// DefaultWebPort is the default port the service will listen on
 	DefaultWebPort = 8080
 )
+
+// storage defaults
+const (
+	DefaultStoragePath = "uploaded"
+)

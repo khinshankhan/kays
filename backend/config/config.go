@@ -17,6 +17,9 @@ type Config struct {
 	// DB is the configuration for the db connection
 	DB *DBConfig `yaml:"db"`
 
+	// Storage is the configuration for file storage
+	Storage *StorageConfig `yaml:"storage"`
+
 	// Meta contains meta information about the config
 	// it isn't specified in the user config
 	Meta *MetaConfig
@@ -66,6 +69,10 @@ func parseAndValidateConfig(bytes []byte, filename string) (*Config, error) {
 	}
 
 	if err := validateDBConfig(config); err != nil {
+		return nil, err
+	}
+
+	if err := validateStorageConfig(config); err != nil {
 		return nil, err
 	}
 
