@@ -50,6 +50,7 @@ func CreateRouter(cfg *config.Config) *mux.Router {
 
 	router.HandleFunc("/meta", MetaHandler(cfg.Meta))
 	router.HandleFunc("/upload", UploadHandler(filesRepo))
+	router.HandleFunc("/files", FilesMetaHandler(filesRepo))
 
 	return router
 }
