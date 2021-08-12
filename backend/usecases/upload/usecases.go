@@ -19,15 +19,13 @@ type (
 	// usecases declares the dependencies for the service
 	usecases struct {
 		filesRepo   files.Repository
-		storagePath string
 	}
 )
 
 // NewUsecases returns Usecases
-func NewUsecases(filesRepo files.Repository, storagePath string) usecases {
+func NewUsecases(filesRepo files.Repository) usecases {
 	return usecases{
 		filesRepo: filesRepo,
-		storagePath: storagePath,
 	}
 }
 
@@ -35,7 +33,7 @@ func (usecases usecases) Upload(filename string, file multipart.File) (string, e
 	saveid := uuid.New()
 	savename := saveid.String()
 
-	err := fs.SaveFile(path.Join(usecases.storagePath, savename), file)
+	err := fs.SaveFile(path.Join(usecases.filesRepo.StoragePath, savename), file)
 	if err != nil {
 		log.Println("Error saving file:", err.Error())
 		return savename, err

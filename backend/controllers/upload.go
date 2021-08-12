@@ -17,8 +17,8 @@ var (
 	Size = utils.MebibyteToBytes(10)
 )
 
-func UploadHandler(filesRepo files.Repository, storagePath string) http.HandlerFunc {
-	uploadService := uploadusecases.NewUsecases(filesRepo, storagePath)
+func UploadHandler(filesRepo files.Repository) http.HandlerFunc {
+	uploadService := uploadusecases.NewUsecases(filesRepo)
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != "POST" {

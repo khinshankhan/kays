@@ -8,13 +8,15 @@ import (
 
 type (
 	Repository struct {
-		db *sql.DB
+		db          *sql.DB
+		StoragePath string
 	}
 )
 
-func NewRepository(db *sql.DB) Repository {
+func NewRepository(db *sql.DB, storagePath string) Repository {
 	return Repository{
-		db: db,
+		db:          db,
+		StoragePath: storagePath,
 	}
 }
 
