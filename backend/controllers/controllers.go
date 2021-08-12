@@ -51,6 +51,7 @@ func CreateRouter(cfg *config.Config) *mux.Router {
 	router.HandleFunc("/meta", MetaHandler(cfg.Meta))
 	router.HandleFunc("/upload", UploadHandler(filesRepo))
 	router.HandleFunc("/files", FilesMetaHandler(filesRepo))
+	router.HandleFunc("/serve/{fileUUID:[a-f0-9-]+}", ServeHandler(filesRepo))
 
 	return router
 }
