@@ -18,7 +18,7 @@ type (
 
 	// usecases declares the dependencies for the service
 	usecases struct {
-		filesRepo   files.Repository
+		filesRepo files.Repository
 	}
 )
 
