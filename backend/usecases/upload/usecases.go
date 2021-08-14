@@ -3,6 +3,7 @@ package usecases
 import (
 	"log"
 	"mime/multipart"
+	"path"
 
 	"github.com/google/uuid"
 	"github.com/kkhan01/caputo/backend/data/files"
@@ -17,7 +18,7 @@ type (
 
 	// usecases declares the dependencies for the service
 	usecases struct {
-		filesRepo files.Repository
+		filesRepo   files.Repository
 	}
 )
 
@@ -32,7 +33,7 @@ func (usecases usecases) Upload(filename string, file multipart.File) (string, e
 	saveid := uuid.New()
 	savename := saveid.String()
 
-	err := fs.SaveFile(savename, file)
+	err := fs.SaveFile(path.Join(usecases.filesRepo.StoragePath, savename), file)
 	if err != nil {
 		log.Println("Error saving file:", err.Error())
 		return savename, err
