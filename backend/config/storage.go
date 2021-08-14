@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"path"
 	"strings"
 
 	"golang.org/x/sys/unix"
@@ -23,13 +24,23 @@ func validateStorageConfig(cfg *Config) error {
 		cfg.Storage.Path = DefaultStoragePath
 	}
 
+	clean := path.Clean(cfg.Storage.Path)
+	if strings.HasPrefix(clean, "~/") {
+		return fmt.Errorf("use $HOME instead of ~ in your path")
+	}
+
 	info, err := os.Stat(cfg.Storage.Path)
 	if os.IsNotExist(err) {
+		cwd, err := os.Getwd()
+		if err != nil {
+			return fmt.Errorf("could not retrieve current working directory for error checking")
+		}
+		absValid := path.IsAbs(clean) && strings.HasPrefix(clean, cwd)
+		relValid := !path.IsAbs(clean) && !strings.HasPrefix(clean, "..")
+
 		// if it is a local path, create it
-		if !strings.HasPrefix(cfg.Storage.Path, "/") &&
-		!strings.HasPrefix(cfg.Storage.Path, "../") &&
-		!strings.HasPrefix(cfg.Storage.Path, "~/") {
-			err = os.MkdirAll(cfg.Storage.Path, 0700)
+		if absValid || relValid {
+			err = os.MkdirAll(clean, 0700)
 			if err != nil {
 				return err
 			}
