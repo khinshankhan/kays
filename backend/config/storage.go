@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"golang.org/x/sys/unix"
 )
 
 type StorageConfig struct {
@@ -36,6 +38,8 @@ func validateStorageConfig(cfg *Config) error {
 		}
 	} else if !info.IsDir() {
 		return fmt.Errorf("invalid path: \"%s\" is not a valid directory", cfg.Storage.Path)
+	} else if unix.Access(cfg.Storage.Path, unix.W_OK) != nil {
+		return fmt.Errorf("invalid path: user does not have write permission on directory \"%s\"", cfg.Storage.Path)
 	}
 
 	return nil
