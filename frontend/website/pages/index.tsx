@@ -14,7 +14,7 @@ const Index: NextPage = () => {
       .then(json => {
         setFiles(json);
       })
-  });
+  }, []);
 
   return (
     <>
