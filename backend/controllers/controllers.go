@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/http/httputil"
+	"net/url"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -48,8 +50,16 @@ func CreateRouter(cfg *config.Config) *mux.Router {
 	conn := rds.GetConnection(cfg.DB)
 	filesRepo := files.NewRepository(conn, cfg.Storage.Path)
 
+	// proxy to frontend (for development)
+	frontendURL, _ := url.Parse("http://localhost:3000")
+	proxy := httputil.NewSingleHostReverseProxy(frontendURL)
+	router.Handle("/", proxy)
+	router.PathPrefix("/_next").Handler(proxy)
+
 	router.HandleFunc("/meta", MetaHandler(cfg.Meta))
 	router.HandleFunc("/upload", UploadHandler(filesRepo))
+	router.HandleFunc("/files", FilesMetaHandler(filesRepo))
+	router.HandleFunc("/serve/{fileUUID:[a-f0-9-]+}", ServeHandler(filesRepo))
 
 	return router
 }
